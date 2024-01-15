@@ -158,8 +158,9 @@ export default function Home() {
 
     return () => {
       // Cleanup the event listener when the component unmounts
-      if (!listening) {
+      if (!listening && gameContract) {
         gameContract.removeAllListeners();
+      } else if (!listening && coqContract) {
         coqContract.removeAllListeners();
       }
     };
