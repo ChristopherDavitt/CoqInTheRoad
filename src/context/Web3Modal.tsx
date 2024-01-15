@@ -21,7 +21,10 @@ export default function Web3ModalProvider({ children }: { children: React.ReactN
           .then((data: any) => dispatch({ type: 'UPDATE_ALLOWANCE', payload: ethers.utils.formatEther(data) }) )
         ;
         contract.balanceOf(account.address)
-        .then((data: any) =>  dispatch({ type: 'UPDATE_BALANCE', payload: ethers.utils.formatEther(data) }))
+          .then((data: any) =>  dispatch({ type: 'UPDATE_BALANCE', payload: ethers.utils.formatEther(data) }))
+        contract.balanceOf(process.env.NEXT_PUBLIC_GAME_CA!!)
+          .then((data: any) => dispatch({ type: 'UPDATE_TREASURY', payload: ethers.utils.formatEther(data) }) )
+        ;
       ;
       } catch (error) {
         console.error('Error Getting Allowance:', error);
@@ -36,11 +39,11 @@ export default function Web3ModalProvider({ children }: { children: React.ReactN
         // Connect to an Ethereum provider (e.g., Infura, Alchemy, MetaMask)
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const contract = new ethers.Contract(process.env.NEXT_PUBLIC_GAME_CA!!, coqInTheRoadABI, provider);
+        contract.treasuryBalance()
+          .then((data: any) => dispatch({ type: 'UPDATE_TREASURY', payload: data }) )
+        ;
         contract.minBet()
           .then((data: any) => dispatch({ type: 'UPDATE_MIN_BET', payload: ethers.utils.formatEther(data) }) )
-        ;
-        contract.treasuryBalance()
-          .then((data: any) => dispatch({ type: 'UPDATE_TREASURY', payload: ethers.utils.formatEther(data) }) )
         ;
       ;
       } catch (error) {

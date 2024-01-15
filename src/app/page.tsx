@@ -40,6 +40,8 @@ export default function Home() {
   const minBet = useAppSelector((state) => state.minBet);
   const treasuryBalance = useAppSelector((state) => state.treasuryBalance);
 
+  const [listening, setListening] = React.useState(false);
+
   const approve = async (coqToApprove: string) => {
     if (window.ethereum && account.address) {
       try {
@@ -49,6 +51,7 @@ export default function Home() {
         const contract = new ethers.Contract(process.env.NEXT_PUBLIC_COQ_CA!!, erc20ABI, signer);
         await contract.approve(process.env.NEXT_PUBLIC_GAME_CA, ethers.utils.parseUnits(coqToApprove));
         console.log('Approved...')
+        setListening(true);
       } catch (error) {
         console.error('Error Approving Token:', error);
         throw error;
@@ -77,7 +80,7 @@ export default function Home() {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(process.env.NEXT_PUBLIC_GAME_CA!!, coqInTheRoadABI, signer);
-        await contract.fundTreasury(ethers.utils.parseUnits('10000000000'));
+        await contract.fundTreasury(ethers.utils.parseUnits('100000'));
         await getTreasury();
       } catch (error) {
         console.error('Error Approving Token:', error);
@@ -95,6 +98,7 @@ export default function Home() {
         const contract = new ethers.Contract(process.env.NEXT_PUBLIC_GAME_CA!!, coqInTheRoadABI, signer);
         await contract.playChicken(ethers.utils.parseUnits(_coqBet), _lane, _cars);
         dispatch({ type: 'LOADING' });
+        setListening(true);
       } catch (error) {
         console.error('Error Approving Token:', error);
         throw error;
@@ -118,6 +122,7 @@ export default function Home() {
             // Your event handling logic
             dispatch({ type: 'UPDATE_ALLOWANCE', payload: ethers.utils.formatEther(value) });
             console.log('EVENT EMITTED');
+            setListening(false);
           });
         } catch (error) {
           console.error('Error setting up event listener:', error);
@@ -139,6 +144,7 @@ export default function Home() {
             dispatch({ type: 'UPDATE_COQ_WON', payload: ethers.utils.formatEther(coqWon) });
             onOpen();
             dispatch({ type: 'FINISH_LOADING' });
+            setListening(false);
             console.log('EVENT EMITTED');
           });
         } catch (error) {
@@ -152,15 +158,13 @@ export default function Home() {
 
     return () => {
       // Cleanup the event listener when the component unmounts
-      if (gameContract) {
+      if (!listening) {
         gameContract.removeAllListeners();
-      }
-      if (coqContract) {
         coqContract.removeAllListeners();
       }
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account.address]); 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listening]); 
 
   return (
     <>
