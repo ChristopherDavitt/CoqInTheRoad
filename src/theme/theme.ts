@@ -14,7 +14,7 @@ const theme = extendTheme({
   styles: {
     global: (props: StyleFunctionProps) => ({
       body: {
-        color: 'text',
+        color: 'defaultColor',
         bg: 'default',
       },
     }),
@@ -36,6 +36,10 @@ const theme = extendTheme({
       default: {
         default: 'white',
         _dark: 'gray.800'
+      },
+      defaultColor: {
+        default: 'gray.800',
+        _dark: 'white'
       }
     }
   }

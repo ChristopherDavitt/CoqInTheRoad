@@ -1,55 +1,69 @@
 "use client"
 
+import { coqInTheRoadABI, erc20ABI } from '@/abis';
 import { useAppDispatch } from '@/lib/hooks';
-import { createWeb3Modal, defaultConfig, useWeb3ModalAccount } from '@web3modal/ethers/react'
+import { useWeb3ModalAccount } from '@web3modal/ethers5/react'
+import { ethers } from 'ethers';
 import React from 'react';
-
-// 1. Get projectId
-const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID!!
-
-// 2. Set chains
-export const networkParams = {
-    avalanche : {
-      chainId: 43114,
-      rpcUrl: "https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc",
-      name: "Avalanche Mainnet",
-      currency: 'AVAX',
-      explorerUrl: "https://snowtrace.io",
-    },
-    fuji: {
-      chainId: 43113,
-      rpcUrl: "https://api.avax-test.network/ext/bc/C/rpc",
-      name: "Avalanche FUJI C-Chain",
-      currency: "AVAX",
-      explorerUrl: "https://testnet.snowtrace.io/",
-    }
-};
-  
-
-// 3. Create modal
-const metadata = {
-  name: 'Lazy Bear River',
-  description: 'Stake your bear on the river to compete for the tasty reward of FISH. Will you be able to work together to solve the population problem, or face the perils of greed?',
-  url: 'https://lazybearriver.com',
-  icons: ['/icon.png']
-}
-
-createWeb3Modal({
-  ethersConfig: defaultConfig({ metadata }),
-  chains: [networkParams.avalanche, networkParams.fuji],
-  projectId
-})
 
 export default function Web3ModalProvider({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
   const account = useWeb3ModalAccount();
 
+
+  const getAllowanceAndBalance = async () => {
+    if (window.ethereum && account.address) {
+      try {
+        // Connect to an Ethereum provider (e.g., Infura, Alchemy, MetaMask)
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const contract = new ethers.Contract(process.env.NEXT_PUBLIC_COQ_CA!!, erc20ABI, provider);
+        contract.allowance(account.address, process.env.NEXT_PUBLIC_GAME_CA!!)
+          .then((data: any) => dispatch({ type: 'UPDATE_ALLOWANCE', payload: ethers.utils.formatEther(data) }) )
+        ;
+        contract.balanceOf(account.address)
+        .then((data: any) =>  dispatch({ type: 'UPDATE_BALANCE', payload: ethers.utils.formatEther(data) }))
+      ;
+      } catch (error) {
+        console.error('Error Getting Allowance:', error);
+        throw error;
+      }
+    }
+  }
+
+  const getMinBet = async () => {
+    if (window.ethereum && account.address) {
+      try {
+        // Connect to an Ethereum provider (e.g., Infura, Alchemy, MetaMask)
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const contract = new ethers.Contract(process.env.NEXT_PUBLIC_GAME_CA!!, coqInTheRoadABI, provider);
+        contract.minBet()
+          .then((data: any) => dispatch({ type: 'UPDATE_MIN_BET', payload: ethers.utils.formatEther(data) }) )
+        ;
+        contract.treasuryBalance()
+          .then((data: any) => dispatch({ type: 'UPDATE_TREASURY', payload: ethers.utils.formatEther(data) }) )
+        ;
+      ;
+      } catch (error) {
+        console.error('Error Getting Min Bet:', error);
+        throw error;
+      }
+    }
+  }
+
+
   // Dispatch action when account changes
   React.useEffect(() => {
-      if (account) {
-          dispatch({type: 'UPDATE_ACCOUNT', payload: account});
-      }
-  }, [account, dispatch]);
-  
+    if (account) {
+      dispatch({type: 'UPDATE_ACCOUNT', payload: account});
+    }
+    fetch(`https://api.traderjoexyz.com/priceusd/0x420fca0121dc28039145009570975747295f2329`)
+      .then((data) => data.json())
+      .then((res) =>  dispatch({ payload: res, type: 'UPDATE_COQ_PRICE'}));
+    getAllowanceAndBalance();
+    getMinBet();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account]);
+      
   return children;
 }

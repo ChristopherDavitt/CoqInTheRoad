@@ -16,7 +16,7 @@ export const fonts = {
   rubik,
 }
 export const metadata: Metadata = {
-  title: 'Coq In The Road',
+  title: 'COQ In The Road',
   description: 'What happened when the COQ crossed the road?',
 }
 

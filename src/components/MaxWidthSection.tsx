@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 
 const MaxWidthSection = ({ bg, children }: { children: React.ReactNode, bg?: string }) => {
     const sectionStyle = {
-        maxWidth: '1400px',
+        maxWidth: '1000px',
         marginLeft: 'auto',
         marginRight: 'auto',
         padding: '1em',

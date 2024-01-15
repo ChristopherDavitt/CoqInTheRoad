@@ -2,10 +2,8 @@
 import { useRef } from 'react';
 import { Provider } from 'react-redux';
 import { makeStore, AppStore } from '../lib/store';
-import { createWeb3Modal, defaultConfig, useWeb3ModalAccount } from '@web3modal/ethers/react'
-import { useAppDispatch } from '@/lib/hooks';
 import React from 'react';
-
+import { createWeb3Modal, defaultConfig } from '@web3modal/ethers5';
 // 1. Get projectId
 const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID!!
 
@@ -13,14 +11,14 @@ const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID!!
 export const networkParams = {
     avalanche : {
       chainId: 43114,
-      rpcUrl: "https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc",
+      rpcUrl: "https://avalanche-mainnet.infura.io/v3/e3d31f07ae9b498aa779479bf1560fde",
       name: "Avalanche Mainnet",
       currency: 'AVAX',
       explorerUrl: "https://snowtrace.io",
     },
     fuji: {
       chainId: 43113,
-      rpcUrl: "https://api.avax-test.network/ext/bc/C/rpc",
+      rpcUrl: "https://avalanche-fuji.infura.io/v3/e3d31f07ae9b498aa779479bf1560fde",
       name: "Avalanche FUJI C-Chain",
       currency: "AVAX",
       explorerUrl: "https://testnet.snowtrace.io/",
@@ -29,9 +27,9 @@ export const networkParams = {
 
 // 3. Create modal
 const metadata = {
-  name: 'Lazy Bear River',
-  description: 'Stake your bear on the river to compete for the tasty reward of FISH. Will you be able to work together to solve the population problem, or face the perils of greed?',
-  url: 'https://lazybearriver.com',
+  name: 'COQ In The Road',
+  description: 'What happened when the COQ crossed the road???',
+  url: 'https://coqintheroad.com',
   icons: ['/icon.png']
 }
 
@@ -39,7 +37,7 @@ createWeb3Modal({
   ethersConfig: defaultConfig({ metadata }),
   chains: [networkParams.avalanche, networkParams.fuji],
   projectId
-})
+});
 
 export default function StoreProvider({
   children

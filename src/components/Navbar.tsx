@@ -11,27 +11,21 @@ import Image from 'next/image';
 import ConnectButton from './ConnectButton';
 import { Suspense } from 'react';
 
-
 export default function Navbar() {
   return (
-    <header style={{ borderBottom: '1px solid', borderColor: 'rgb(200, 200, 200)' }}>
+    <header style={{ borderBottom: '1px solid', borderColor: 'rgb(200, 200, 200)', backgroundColor: 'blue.200' }}>
       <Flex
         margin="0 auto"
         paddingX={2}
-        maxWidth="1400px"
+        maxWidth="1000px"
         gap='1rem'
         align='center'
         justify='space-between'
       >
-          <Flex
-            align='center'
-          >
+          <Flex align='center'>
             <Image width={80} src={logo} alt='logo' />
           </Flex>
-          <Flex
-            gap='1rem'
-            align='center'
-          >
+          <Flex gap='1rem' align='center'>
             <ColorModeSwitcher />
             <Suspense fallback={<Button isLoading colorScheme="blue"></Button>}>
               <ConnectButton />
