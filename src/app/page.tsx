@@ -10,6 +10,7 @@ import { ethers } from 'ethers';
 import { coqInTheRoadABI, erc20ABI } from '@/abis';
 import formatEtherValue from '@/utils/formatEther';
 import Link from 'next/link';
+import GameStats from '@/components/GameStats';
 
 const carMultipliers = [1425, 2137, 3206, 4809, 7214, 10821, 16232];
 
@@ -142,7 +143,7 @@ export default function Home() {
           <Box flex={{ base: 1, md: 2 }} pb={{ base: 0, md: 8 }}>
             <Image width={500} height={500} src={loading ? "/tv-loading.gif" : "/animation.gif"} unoptimized alt="tv foreground" />
           </Box>
-          <Stack bg="bg" mt={8} mb='2rem' gap='0.5rem' borderRadius={6} border="solid 1px" borderColor="gray.100" padding={4}>
+          <Stack width={"100%"}  maxWidth={400} flex={1} bg="bg" mt={8} mb='2rem' gap='0.5rem' borderRadius={6} border="solid 1px" borderColor="gray.100" padding={4}>
               <Box>
                 <Heading mt={4} size='md'>COQ In The Road</Heading>
                 <Link href={`https://snowtrace.io/address/${process.env.NEXT_PUBLIC_GAME_CA}/contract/43114/code`}>
@@ -172,7 +173,7 @@ export default function Home() {
               {/* Lane */}
               <Flex align='center' justify='space-between' gap='0.5rem'>
                 <Heading flex={1} size='sm'>Lane</Heading>
-                <HStack flex={2} spacing={1} align='center' justify='space-between'>
+                <HStack flex={2} spacing={1} align='center' justify='space-around'>
                   <IconButton isActive={lane === 1} size='sm' boxShadow='sm' 
                     borderRadius='lg' aria-label='add' 
                     icon={<>1</>} onClick={() => setLane(1)} 
@@ -219,6 +220,9 @@ export default function Home() {
           </Stack>
         </HStack>
         {/* <Button onClick={() => fundTreasury()}>FUND TREASURY</Button> */}
+      </MaxWidthSection>
+      <MaxWidthSection>
+        <GameStats />
       </MaxWidthSection>
       {isOpen ? 
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
