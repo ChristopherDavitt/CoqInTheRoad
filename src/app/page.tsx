@@ -20,6 +20,7 @@ export default function Home() {
   const [lane, setLane] = React.useState(1);
 
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const { isOpen: isOpenInfo, onClose: onCloseInfo, onOpen: onOpenInfo } = useDisclosure();
 
   const handleCoqChange = (value: any) => {
     // Conditionals to check for max and minBets.
@@ -144,14 +145,15 @@ export default function Home() {
             <Image width={500} height={500} src={loading ? "/tv-loading.gif" : "/animation.gif"} unoptimized alt="tv foreground" />
           </Box>
           <Stack width={"100%"}  maxWidth={400} flex={1} bg="bg" mt={8} mb='2rem' gap='0.5rem' borderRadius={6} border="solid 1px" borderColor="gray.100" padding={4}>
-              <Box>
-                <Heading mt={4} size='md'>COQ In The Road</Heading>
-                <Link href={`https://snowtrace.io/address/${process.env.NEXT_PUBLIC_GAME_CA}/contract/43114/code`}>
-                  <Text my={1} fontSize="xx-small">
-                    <em>{process.env.NEXT_PUBLIC_GAME_CA}</em>
-                  </Text>
-                </Link>
-              </Box>
+              <Flex  mt={4} justifyContent="space-between" align="center">
+                <Heading size='md'>COQ In The Road</Heading>
+                <IconButton onClick={onOpenInfo} aria-label="info" borderRadius={9999} width={8} height={8} colorScheme='blue' icon={<>i</>} size="small" />
+              </Flex>
+              <Link href={`https://snowtrace.io/address/${process.env.NEXT_PUBLIC_GAME_CA}/contract/43114/code`}>
+                <Text my={1} fontSize="x-small">
+                  <em>CA: {process.env.NEXT_PUBLIC_GAME_CA}</em>
+                </Text>
+              </Link>
               <Divider />
               {/* Cars */}
               <Flex width="100%" align='center' justify='space-between'>
@@ -216,7 +218,7 @@ export default function Home() {
               <Button mt={2} isLoading={loading} isDisabled={loading || coqBet > Number(balance) || coqBet < Number(minBet) || (coqBet * carMultipliers[cars - 1] / 1000) > (Number(treasuryBalance) / 20)} onClick={() => playGame(String(coqBet), lane, cars)}>
                 Play Game
               </Button>
-            : <Button mt={2} onClick={() => approve('100000000000')}>Approve</Button>}
+            : <Button isDisabled={!account.address} mt={2} onClick={() => approve('100000000000')}>Approve</Button>}
           </Stack>
         </HStack>
         {/* <Button onClick={() => fundTreasury()}>FUND TREASURY</Button> */}
@@ -234,6 +236,35 @@ export default function Home() {
                 <Image src={won ? "/survive.gif" : "death.gif"} unoptimized alt="tv" width={300} height={300} />
                 <Heading>You {won === true ? 'Won!!!' : 'Lost'}</Heading>
                 <Text>Total Payout: {coqWon} COQ</Text>
+              </Stack>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      : null}
+      {isOpenInfo ? 
+        <Modal isOpen={isOpenInfo} onClose={onCloseInfo}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalCloseButton />
+            <ModalBody>
+              <Stack align="center" textAlign="left" justify="center">
+                <Box mt={8}>
+                    <Heading>Bet on your COQ</Heading>
+                  <Text>Pick a lane, and send cars towards your COQ.</Text>
+                  <Text>The more cars you send, the higher the rewards, the more dangerous it becomes.</Text>
+                  <Flex my={2} align="center" justify="space-between">
+                    <Heading>Cars</Heading>
+                    <Image src="/7.png" alt="cars" width={48} height={48} />
+                  </Flex>
+                  <Text>Send between 1 - 7 cars towards your COQ. for each car sent there is a 1/3 chance your COQ gets hit, so beware!!</Text>
+                  <Flex my={2} align="center" justify="space-between">
+                    <Heading>Lane</Heading>
+                    <Image src="/lane2.png" alt="lane" width={48} height={48} />
+                  </Flex>
+                  <Text>Pick a lane for your COQ to stay in and pray the cars dodge you!</Text>
+                  <Heading my={2}>Rewards and Outcome</Heading>
+                  <Text mb={8}>Rewards are proportional to the risk. 5% goes to the house.</Text>
+                </Box>
               </Stack>
             </ModalBody>
           </ModalContent>
