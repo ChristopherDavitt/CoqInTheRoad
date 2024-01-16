@@ -51,7 +51,7 @@ export default function WhitePaper() {
         <Heading>Result</Heading>
         <Text>You either survive or die. COQ is payed out to winners.</Text>
         <Text>Payout: <Code>coqBet * carMultipliers[carNumber - 1] / 1000</Code></Text>
-        <Stack flexDirection={{ base: 'row', md: 'column'}}>
+        <Stack flexDirection={{ base: 'column', md: 'row' }}>
           <Image src={"/survive.gif"} unoptimized alt="tv" width={300} height={300} />
           <Image src={"/death.gif"} unoptimized alt="tv" width={300} height={300} />
         </Stack>

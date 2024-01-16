@@ -15,7 +15,7 @@ const GameStats = () => {
   }, [account]);
 
   const fetchGames = async () => {
-    if (window.ethereum && account.address) {
+    if (window.ethereum && account.address && account.chainId !== process.env.NEXT_PUBLIC_CHAIN_ID) {
       try {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const gameContract = new ethers.Contract(process.env.NEXT_PUBLIC_GAME_CA!!, coqInTheRoadABI, provider);
