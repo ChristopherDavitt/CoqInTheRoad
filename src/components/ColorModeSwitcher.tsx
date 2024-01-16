@@ -10,9 +10,9 @@ import { SunIcon } from "@chakra-ui/icons"
 type ColorModeSwitcherProps = Omit<IconButtonProps, "aria-label">
 
 export const ColorModeSwitcher = (props: ColorModeSwitcherProps) => {
-const { toggleColorMode } = useColorMode()
-const text = useColorModeValue("dark", "light")
-const SwitchIcon = useColorModeValue(FaMoon, SunIcon)
+const { toggleColorMode } = useColorMode();
+const text = useColorModeValue("dark", "light");
+const SwitchIcon = useColorModeValue(FaMoon, SunIcon);
 
 return (
     <IconButton
