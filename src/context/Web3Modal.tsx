@@ -93,7 +93,7 @@ export default function Web3ModalProvider({ children }: { children: React.ReactN
           }
           console.error(error);
         }
-      } else if (account && account.chainId !== process.env.NEXT_PUBLIC_CHAIN_ID) {
+      } else if (account && account.chainId === process.env.NEXT_PUBLIC_CHAIN_ID) {
         dispatch({type: 'UPDATE_ACCOUNT', payload: account});
         getAllowanceAndBalance();
         getMinBet();
