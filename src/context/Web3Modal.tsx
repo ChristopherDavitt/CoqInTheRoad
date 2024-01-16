@@ -2,9 +2,43 @@
 
 import { coqInTheRoadABI, erc20ABI } from '@/abis';
 import { useAppDispatch } from '@/lib/hooks';
-import { useWeb3ModalAccount } from '@web3modal/ethers5/react'
+import { createWeb3Modal, defaultConfig, useWeb3ModalAccount } from '@web3modal/ethers5/react'
 import { ethers } from 'ethers';
 import React from 'react';
+
+const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID!!
+
+// 2. Set chains
+export const networkParams = {
+    avalanche : {
+      chainId: 43114,
+      rpcUrl: "https://avalanche-mainnet.infura.io/v3/e3d31f07ae9b498aa779479bf1560fde",
+      name: "Avalanche Mainnet",
+      currency: 'AVAX',
+      explorerUrl: "https://snowtrace.io",
+    },
+    fuji: {
+      chainId: 43113,
+      rpcUrl: "https://avalanche-fuji.infura.io/v3/e3d31f07ae9b498aa779479bf1560fde",
+      name: "Avalanche FUJI C-Chain",
+      currency: "AVAX",
+      explorerUrl: "https://testnet.snowtrace.io/",
+    }
+};
+
+// 3. Create modal
+const metadata = {
+  name: 'COQ In The Road',
+  description: 'What happened when the COQ crossed the road???',
+  url: 'https://coqintheroad.com',
+  icons: ['/icon.png']
+}
+
+createWeb3Modal({
+  ethersConfig: defaultConfig({ metadata }),
+  chains: [networkParams.avalanche, networkParams.fuji],
+  projectId,
+});
 
 export default function Web3ModalProvider({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
@@ -12,7 +46,7 @@ export default function Web3ModalProvider({ children }: { children: React.ReactN
 
 
   const getAllowanceAndBalance = async () => {
-    if (window.ethereum && account.address && account.chainId === process.env.NEXT_PUBLIC_CHAIN_ID) {
+    if (window.ethereum && account.address && account.chainId === 43114) {
       try {
         // Connect to an Ethereum provider (e.g., Infura, Alchemy, MetaMask)
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -34,7 +68,7 @@ export default function Web3ModalProvider({ children }: { children: React.ReactN
   }
 
   const getMinBet = async () => {
-    if (window.ethereum && account.address && account.chainId === process.env.NEXT_PUBLIC_CHAIN_ID) {
+    if (window.ethereum && account.address && account.chainId === 43114) {
       try {
         // Connect to an Ethereum provider (e.g., Infura, Alchemy, MetaMask)
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -65,7 +99,7 @@ export default function Web3ModalProvider({ children }: { children: React.ReactN
           window.location.reload();
         }
       });
-      if (account.chainId !== process.env.NEXT_PUBLIC_CHAIN_ID) {
+      if (account.chainId !==43114) {
         try {
           // check if the chain to connect to is installed
           window.ethereum.request({
@@ -93,7 +127,7 @@ export default function Web3ModalProvider({ children }: { children: React.ReactN
           }
           console.error(error);
         }
-      } else if (account && account.chainId === process.env.NEXT_PUBLIC_CHAIN_ID) {
+      } else if (account) {
         dispatch({type: 'UPDATE_ACCOUNT', payload: account});
         getAllowanceAndBalance();
         getMinBet();

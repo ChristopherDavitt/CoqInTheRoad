@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import { makeStore, AppStore } from '../lib/store';
 import React from 'react';
 import { createWeb3Modal, defaultConfig } from '@web3modal/ethers5';
+import { useWeb3ModalTheme } from '@web3modal/ethers5/react';
+import { useColorMode } from '@chakra-ui/react';
 // 1. Get projectId
 const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID!!
 
@@ -36,7 +38,7 @@ const metadata = {
 createWeb3Modal({
   ethersConfig: defaultConfig({ metadata }),
   chains: [networkParams.avalanche, networkParams.fuji],
-  projectId
+  projectId,
 });
 
 export default function StoreProvider({

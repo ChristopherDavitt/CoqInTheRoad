@@ -42,7 +42,7 @@ export default function Home() {
   const [listening, setListening] = React.useState(false);
 
   const approve = async (coqToApprove: string) => {
-    if (window.ethereum && account.address && account.chainId === process.env.NEXT_PUBLIC_CHAIN_ID) {
+    if (window.ethereum && account.address && account.chainId === 43114) {
       try {
         // Connect to an Ethereum provider (e.g., Infura, Alchemy, MetaMask)
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -60,7 +60,7 @@ export default function Home() {
   }
 
   const playGame = async (_coqBet: string, _lane: number, _cars: number,) => {
-    if (window.ethereum && account.address && account.chainId === process.env.NEXT_PUBLIC_CHAIN_ID) {
+    if (window.ethereum && account.address && account.chainId === 43114) {
       try {
         // Connect to an Ethereum provider (e.g., Infura, Alchemy, MetaMask)
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -81,7 +81,7 @@ export default function Home() {
     let gameContract: ethers.Contract;
 
     const setupEventListener = async () => {
-      if (window.ethereum && account.address && account.chainId === process.env.NEXT_PUBLIC_CHAIN_ID) {
+      if (window.ethereum && account.address && account.chainId === 43114) {
         try {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const signer = provider.getSigner();
@@ -101,7 +101,7 @@ export default function Home() {
     };
 
     const setupGameEventListener = async () => {
-      if (window.ethereum && account.address && account.chainId === process.env.NEXT_PUBLIC_CHAIN_ID) {
+      if (window.ethereum && account.address && account.chainId === 43114) {
         try {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const signer = provider.getSigner();

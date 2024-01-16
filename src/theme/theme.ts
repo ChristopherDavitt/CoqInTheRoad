@@ -23,6 +23,8 @@ const theme = extendTheme({
       },
     }),
   },
+  initialColorMode: 'system',
+  useSystemColorMode: true,
   semanticTokens: {
     colors: {
       text: {
