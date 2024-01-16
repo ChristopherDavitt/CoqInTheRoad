@@ -11,6 +11,10 @@ const breakpoints = {
 
 const theme = extendTheme({
   breakpoints,
+  fonts: {
+    heading: `'Space Mono', monospace`,
+    body: `'Space Mono', monospace`,
+  },
   styles: {
     global: (props: StyleFunctionProps) => ({
       body: {

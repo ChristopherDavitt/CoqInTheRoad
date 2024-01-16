@@ -2,19 +2,19 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { ThemeProvider } from './providers';
 // app/fonts.ts
-import { Rubik } from 'next/font/google'
+import { Space_Mono } from 'next/font/google'
 import Navbar from '@/components/Navbar';
 import Web3ModalProvider from "../context/Web3Modal";
 import StoreProvider from './StoreProvider';
 
-const rubik = Rubik({
+const mono = Space_Mono({
   subsets: ['latin'],
-  variable: '--font-rubik',
+  variable: '--font-mono',
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  display: 'swap',
 })
 
-export const fonts = {
-  rubik,
-}
 export const metadata: Metadata = {
   title: 'COQ In The Road',
   description: 'What happened when the COQ crossed the road?',
@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={fonts.rubik.variable}>
+    <html lang="en" className={mono.className}>
       <body>
         <StoreProvider>
           <ThemeProvider>
