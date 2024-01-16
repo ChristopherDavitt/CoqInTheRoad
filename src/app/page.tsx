@@ -230,7 +230,7 @@ export default function Home() {
               </NumberInput>
               {/* Could fetch spot price in Trader Joe... to make ~$10.96 */}
               <Text fontSize="small" color="text"><em>~ ${(Number(ethers.utils.formatEther(price)) * coqBet).toFixed(2)}</em></Text>
-            {Number(allowance) > 190000000000 ?
+            {Number(allowance) > 100000000 ?
               <Button mt={2} isLoading={loading} isDisabled={loading || coqBet > Number(balance) || coqBet < Number(minBet) || (coqBet * carMultipliers[cars - 1] / 1000) > (Number(treasuryBalance) / 20)} onClick={() => playGame(String(coqBet), lane, cars)}>
                 Play Game
               </Button>
