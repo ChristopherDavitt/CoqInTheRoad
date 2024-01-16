@@ -10,7 +10,7 @@ import { ethers } from 'ethers';
 import { coqInTheRoadABI, erc20ABI } from '@/abis';
 import formatEtherValue from '@/utils/formatEther';
 import Link from 'next/link';
-import GameStats from '@/components/GameStats';
+// import GameStats from '@/components/GameStats';
 
 const carMultipliers = [1425, 2137, 3206, 4809, 7214, 10821, 16232];
 
@@ -223,9 +223,9 @@ export default function Home() {
         </HStack>
         {/* <Button onClick={() => fundTreasury()}>FUND TREASURY</Button> */}
       </MaxWidthSection>
-      <MaxWidthSection>
+      {/* <MaxWidthSection>
         <GameStats />
-      </MaxWidthSection>
+      </MaxWidthSection> */}
       {isOpen ? 
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
           <ModalOverlay />

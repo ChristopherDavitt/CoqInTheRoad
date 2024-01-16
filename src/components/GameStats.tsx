@@ -24,13 +24,13 @@ const GameStats = () => {
         let gamesToFetch = gameId > 10 ? 10 : gameId;
         let fetchedGames = [];
 
-        
+        console.log(gamesToFetch)
         for (let i = gameId - gamesToFetch + 1; i <= gameId; i++) {
           const gameDetails = await gameContract.gameById(i);
           fetchedGames.push({
             gameId: i,
             sender: gameDetails.sender,
-            coqBet: gameDetails.coqBet,
+            coqBet: ethers.utils.formatEther(gameDetails.coqBet),
             carAmount: gameDetails.carAmount,
             laneNumber: gameDetails.laneNumber,
             completed: gameDetails.completed,
@@ -47,7 +47,7 @@ const GameStats = () => {
 
   return (
     <Box>
-      <Text fontSize="xl" mb="4">Last 10 Games</Text>
+      <Text fontSize="xl" mb="4">Recent Games</Text>
       <List>
         {games.slice(0, 10).map((game, index) => (
           <ListItem key={index} p="2" borderBottom="1px" borderColor="gray.200">
