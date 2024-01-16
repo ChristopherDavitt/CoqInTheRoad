@@ -39,9 +39,6 @@ export default function Web3ModalProvider({ children }: { children: React.ReactN
         // Connect to an Ethereum provider (e.g., Infura, Alchemy, MetaMask)
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const contract = new ethers.Contract(process.env.NEXT_PUBLIC_GAME_CA!!, coqInTheRoadABI, provider);
-        contract.treasuryBalance()
-          .then((data: any) => dispatch({ type: 'UPDATE_TREASURY', payload: data }) )
-        ;
         contract.minBet()
           .then((data: any) => dispatch({ type: 'UPDATE_MIN_BET', payload: ethers.utils.formatEther(data) }) )
         ;
