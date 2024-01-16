@@ -22,10 +22,6 @@ export default function Home() {
 
   const handleCoqChange = (value: any) => {
     // Conditionals to check for max and minBets.
-    // Store in state.
-    if (value > 0) {
-
-    }
     setCoqBet(value);
   }
 
@@ -57,21 +53,6 @@ export default function Home() {
         console.error('Error Approving Token:', error);
         throw error;
 
-      }
-    }
-  }
-
-  const fundTreasury = async() => {
-    if (account.address === '0x3A7A1f256b6180d59f58eFc080321A09D456Ee9b') {
-      try {
-        // Connect to an Ethereum provider (e.g., Infura, Alchemy, MetaMask)
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(process.env.NEXT_PUBLIC_GAME_CA!!, coqInTheRoadABI, signer);
-        await contract.fundTreasury(ethers.utils.parseUnits('10000000000'));
-      } catch (error) {
-        console.error('Error Approving Token:', error);
-        throw error;
       }
     }
   }
@@ -157,15 +138,15 @@ export default function Home() {
   return (
     <>
       <MaxWidthSection>
-        <HStack gap="1rem" align="center" justify="center">
-          <Box flex={2} pb={8}>
+        <HStack gap="1rem" align="center" flexDirection={{ base: 'column', md: 'row' }} justify="center">
+          <Box flex={{ base: 1, md: 2 }} pb={{ base: 0, md: 8 }}>
             <Image width={500} height={500} src={loading ? "/tv-loading.gif" : "/animation.gif"} unoptimized alt="tv foreground" />
           </Box>
           <Stack bg="bg" mt={8} mb='2rem' gap='0.5rem' borderRadius={6} border="solid 1px" borderColor="gray.100" padding={4}>
               <Box>
                 <Heading mt={4} size='md'>COQ In The Road</Heading>
                 <Link href={`https://snowtrace.io/address/${process.env.NEXT_PUBLIC_GAME_CA}/contract/43114/code`}>
-                  <Text fontSize="xx-small">
+                  <Text my={1} fontSize="xx-small">
                     <em>{process.env.NEXT_PUBLIC_GAME_CA}</em>
                   </Text>
                 </Link>
@@ -215,7 +196,7 @@ export default function Home() {
               <NumberInput
                 size='lg'
                 defaultValue={10000000}
-                min={5000000}
+                min={10000000}
                 value={coqBet}
                 step={1000000}
                 onChange={handleCoqChange}
