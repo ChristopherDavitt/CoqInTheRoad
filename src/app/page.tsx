@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Box, Heading, HStack, Button, Divider, Flex, Text, IconButton, NumberInput, NumberDecrementStepper, NumberIncrementStepper, NumberInputField, NumberInputStepper, useDisclosure, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, ModalFooter, ModalHeader } from '@chakra-ui/react';
+import { Stack, Box, Heading, HStack, Button, Divider, Flex, Text, IconButton, NumberInput, NumberDecrementStepper, NumberIncrementStepper, NumberInputField, NumberInputStepper, useDisclosure, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, ModalFooter, ModalHeader, Code } from '@chakra-ui/react';
 import Image from 'next/image';
 import MaxWidthSection from '@/components/MaxWidthSection';
 import React from 'react';
@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { ethers } from 'ethers';
 import { coqInTheRoadABI, erc20ABI } from '@/abis';
 import formatEtherValue from '@/utils/formatEther';
+import Link from 'next/link';
 
 const carMultipliers = [1425, 2137, 3206, 4809, 7214, 10821, 16232];
 
@@ -162,7 +163,12 @@ export default function Home() {
           </Box>
           <Stack bg="bg" mt={8} mb='2rem' gap='0.5rem' borderRadius={6} border="solid 1px" borderColor="gray.100" padding={4}>
               <Box>
-                <Heading my={4} size='md'>COQ In The Road</Heading>
+                <Heading mt={4} size='md'>COQ In The Road</Heading>
+                <Link href={`https://snowtrace.io/address/${process.env.NEXT_PUBLIC_GAME_CA}/contract/43114/code`}>
+                  <Text fontSize="xx-small">
+                    <em>{process.env.NEXT_PUBLIC_GAME_CA}</em>
+                  </Text>
+                </Link>
               </Box>
               <Divider />
               {/* Cars */}
