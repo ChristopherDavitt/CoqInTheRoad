@@ -1,6 +1,6 @@
 "use client"
 
-import { Stack, Box, Heading, HStack, Button, Divider, Flex, Text, IconButton, NumberInput, NumberDecrementStepper, NumberIncrementStepper, NumberInputField, NumberInputStepper, useDisclosure, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, ModalFooter, ModalHeader, Code } from '@chakra-ui/react';
+import { Stack, Box, Heading, HStack, Button, Divider, Flex, Text, IconButton, NumberInput, NumberDecrementStepper, NumberIncrementStepper, NumberInputField, NumberInputStepper, useDisclosure, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton } from '@chakra-ui/react';
 import Image from 'next/image';
 import MaxWidthSection from '@/components/MaxWidthSection';
 import React from 'react';
