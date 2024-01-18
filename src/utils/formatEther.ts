@@ -11,13 +11,13 @@ function formatEtherValue(etherString: string) {
     // Format the value
     if (etherAmount.gte(billion)) {
         // If it's in billions, convert to billions and fix to 2 decimal places
-        return `${ethers.utils.formatUnits(etherAmount, 27).slice(0, 5)}B`;
+        return `${parseFloat(ethers.utils.formatUnits(etherAmount, 27)).toFixed(2)}B`;
     } else if (etherAmount.gte(million)) {
-        // If it's in millions, convert to millions without decimals
-        return `${ethers.utils.formatUnits(etherAmount, 24)}M`;
+        // If it's in millions, convert to millions and fix to 2 decimal places
+        return `${parseFloat(ethers.utils.formatUnits(etherAmount, 24)).toFixed(2)}M`;
     } else {
-        // For less than a million, just show in ether
-        return ethers.utils.formatEther(etherAmount);
+        // For less than a million, just show in ether with 2 decimal places
+        return `${parseFloat(ethers.utils.formatEther(etherAmount)).toFixed(2)}`;
     }
 }
 export default formatEtherValue;
